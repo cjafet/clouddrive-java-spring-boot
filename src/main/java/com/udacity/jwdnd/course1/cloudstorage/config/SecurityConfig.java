@@ -29,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // Resources to authorize/restrict access
         http.authorizeRequests()
-                .antMatchers("/signup", "/h2-console/**", "/css/**", "/js/**").permitAll()
+                .antMatchers("/login", "/signup", "/h2-console/**", "/css/**", "/js/**").permitAll()
                 .anyRequest().authenticated();
 
         http.csrf().disable();

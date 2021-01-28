@@ -30,7 +30,7 @@ public class SignupController {
         User newUser = userService.getUser(user.getUsername());
         if(newUser==null) {
             userService.createUser(user);
-            return "redirect:/signup?signup";
+            return "redirect:/login?signup";
         } else {
             return "redirect:/signup?user";
         }

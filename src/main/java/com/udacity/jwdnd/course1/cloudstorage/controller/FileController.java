@@ -39,11 +39,8 @@ public class FileController {
 
             ByteArrayResource resource = new ByteArrayResource(file.getFileData());
 
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Content-Type", file.getContentType());
-
             return ResponseEntity.ok()
-                    .headers(headers)
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFileName() + "\"")
                     .contentLength(file.getFileData().length)
                     .contentType(MediaType.valueOf(file.getContentType()))
                     .body(resource);
@@ -67,7 +64,10 @@ public class FileController {
     @PostMapping
     public String addFile(@RequestParam("fileUpload") MultipartFile fileUpload, Principal principal, Model model) throws IOException {
 
-        if (!fileUpload.isEmpty()) {
+
+        File newFile = this.fileService.getFileName(fileUpload.getOriginalFilename());
+
+        if (!fileUpload.isEmpty() && newFile == null) {
 
             try {
                 Long size = fileUpload.getSize();
@@ -87,7 +87,6 @@ public class FileController {
                 return "redirect:/home?success";
 
             } catch (Exception e) {
-
                 return "redirect:/home?error";
             }
 

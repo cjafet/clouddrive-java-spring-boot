@@ -23,6 +23,10 @@ public class FileService {
         return this.fileMapper.getFileId(fileId);
     }
 
+    public File getFileName(String fileName) {
+        return this.fileMapper.getFileName(fileName);
+    }
+
     public int addFile(File file) {
         return this.fileMapper.insert(file);
     }
